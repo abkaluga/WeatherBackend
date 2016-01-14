@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBElement;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.stream.Collectors;
 
 /**
  * Created by Albert on 13.01.2016.
@@ -61,15 +62,9 @@ public class StationController {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Set<StationDTO> getAll(){
-        Set<Station> stations = repo.getAll();
-        Set<StationDTO> dtos = new HashSet<StationDTO>(stations.size(),0.9f);
-        for(Station station : stations){
-            dtos.add(toDTO(station));
-        }
-
-
-
-        return dtos;
+        return repo.getAll().parallelStream()//
+                                .map((bo)-> toDTO(bo))//
+                                .collect(Collectors.toSet());
     }
 
     private StationDTO toDTO(Station station) {
@@ -80,10 +75,9 @@ public class StationController {
         dto.setTemperature(station.isTemperature());
         dto.setSunshine(station.isSunshine());
 
-        Set<Long> mess = new ConcurrentSkipListSet<Long>();
-        for (Measurement mes : station.getMeasurements()){
-            mess.add(mes.getId());
-        }
+        Set<Long> mess = station.getMeasurements().parallelStream()
+                                    .map((mes)-> mes.getId())
+                                    .collect(Collectors.toSet());
         dto.setMeasurements(mess);
         return dto;
     }
@@ -96,10 +90,9 @@ public class StationController {
         station.setTemperature(dto.isTemperature());
         station.setSunshine(dto.isSunshine());
 
-        Set<Measurement> mess = new HashSet<Measurement>();
-        for (Long mesId : dto.getMeasurements()){
-            mess.add(mesRepo.get(mesId));
-        }
+        Set<Measurement> mess = dto.getMeasurements().stream()
+                                .map((id)-> mesRepo.get(id))
+                                .collect(Collectors.toSet());
         station.setMeasurements(mess);
         return station;
     }

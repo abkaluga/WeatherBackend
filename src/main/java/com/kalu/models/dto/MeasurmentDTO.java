@@ -4,6 +4,8 @@ package com.kalu.models.dto;
  * Created by Albert on 13.01.2016.
  */
 
+import com.kalu.models.MeasurementType;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -11,22 +13,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class MeasurmentDTO {
 
+    @XmlElement
+    private long id;
+
+    @XmlElement
     private long stationId;
-    @XmlAttribute
-    private boolean temperature;
-
-    @XmlAttribute
-    private boolean humidity;
-
-    @XmlAttribute
-    private boolean sunshine;
 
     @XmlElement
-    private float temperatureValue;
+    private float value;
+
     @XmlElement
-    private float humidityValue;
-    @XmlElement
-    private float sunshineValue;
+    private MeasurementType type;
+
+
+    public String toString(){
+        String builder = "[" +
+                " Station id:" + this.getStationId() +
+                " Value:" + this.getValue() +
+                " of type" + this.getType().name() +
+                ']';
+
+
+        return builder;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getStationId() {
         return stationId;
@@ -36,74 +53,19 @@ public class MeasurmentDTO {
         this.stationId = stationId;
     }
 
-    public boolean isTemperature() {
-        return temperature;
+    public float getValue() {
+        return value;
     }
 
-    public void setTemperature(boolean temperature) {
-        this.temperature = temperature;
+    public void setValue(float value) {
+        this.value = value;
     }
 
-    public boolean isHumidity() {
-        return humidity;
+    public MeasurementType getType() {
+        return type;
     }
 
-    public void setHumidity(boolean humidity) {
-        this.humidity = humidity;
-    }
-
-    public boolean isSunshine() {
-        return sunshine;
-    }
-
-    public void setSunshine(boolean sunshine) {
-        this.sunshine = sunshine;
-    }
-
-    public float getTemperatureValue() {
-        return temperatureValue;
-    }
-
-    public void setTemperatureValue(float temperatureValue) {
-        this.temperatureValue = temperatureValue;
-    }
-
-    public float getHumidityValue() {
-        return humidityValue;
-    }
-
-    public void setHumidityValue(float humidityValue) {
-        this.humidityValue = humidityValue;
-    }
-
-    public float getSunshineValue() {
-        return sunshineValue;
-    }
-
-    public void setSunshineValue(float sunshineValue) {
-        this.sunshineValue = sunshineValue;
-    }
-
-    public String toString(){
-        StringBuilder builder = new StringBuilder();
-        builder.append('[');
-        builder.append(" Station id:").append(this.getStationId());
-        builder.append(" Has temperature:").append(this.isTemperature());
-        builder.append( "Has humidity:").append(this.isHumidity());
-        builder.append( "Has sunshine").append(this.isSunshine());
-        if (isTemperature()){
-            builder.append(" T: ").append(this.getTemperatureValue());
-        }
-        if (isHumidity()){
-            builder.append(" H:").append(this.getHumidityValue());
-        }
-        if (isSunshine()){
-            builder.append(" S:").append(this.getSunshineValue());
-        }
-
-        builder.append(']');
-
-
-        return builder.toString();
+    public void setType(MeasurementType type) {
+        this.type = type;
     }
 }

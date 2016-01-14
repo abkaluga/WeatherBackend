@@ -156,7 +156,8 @@ public abstract class CrudRepositoryImpl<T extends DBObject> implements CrudRepo
                 tx = Optional.ofNullable(s.get().getTransaction());
                 if (tx.isPresent()){
                     tx.get().begin();
-                    Query q = s.get().createQuery("Select o FROM "+getInnerClass().getSimpleName()+" o");
+                    String hql = "Select o FROM "+getInnerClass().getSimpleName()+" o";
+                    Query q = s.get().createQuery(hql);
 
                     final Iterator<T> it = q.iterate();
                     while(it.hasNext()){
@@ -172,7 +173,6 @@ public abstract class CrudRepositoryImpl<T extends DBObject> implements CrudRepo
             if (tx.isPresent()){
                 tx.get().rollback();
             }
-            return null;
         } finally {
             if (s.isPresent()){
                 s.get().close();
