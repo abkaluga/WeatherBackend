@@ -6,5 +6,21 @@
     </database-info>
     <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact"/>
     <schema name="PUBLIC" catalog="PUBLIC"/>
+    <table name="MEASUREMENT" schema="PUBLIC" catalog="PUBLIC" type="TABLE">
+      <column name="ID" sqlType="BIGINT" precision="64" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="TYPE" sqlType="INTEGER" precision="32" scale="0" nullable="true" jdbcType="4"/>
+      <column name="VALUE" sqlType="DOUBLE" precision="64" scale="0" nullable="true" jdbcType="8"/>
+      <column name="STATION_ID" sqlType="BIGINT" precision="64" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="SYS_PK_10092" columns="ID"/>
+      <foreign-key name="FK_PVAKDY3ENR3YKIFD9QQADONUN" columns="STATION_ID" ref-table="STATION" ref-schema="PUBLIC" ref-catalog="PUBLIC" ref-columns="ID" update-rule="3" delete-rule="3"/>
+    </table>
+    <table name="STATION" schema="PUBLIC" catalog="PUBLIC" type="TABLE">
+      <column name="ID" sqlType="BIGINT" precision="64" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="HUMIDITY" sqlType="BOOLEAN" precision="0" scale="0" nullable="false" jdbcType="16"/>
+      <column name="NAME" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="SUNSHINE" sqlType="BOOLEAN" precision="0" scale="0" nullable="false" jdbcType="16"/>
+      <column name="TEMPERATURE" sqlType="BOOLEAN" precision="0" scale="0" nullable="false" jdbcType="16"/>
+      <primary-key name="SYS_PK_10096" columns="ID"/>
+    </table>
   </data-source>
 </component>

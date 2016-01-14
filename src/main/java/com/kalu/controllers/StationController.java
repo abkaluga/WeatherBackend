@@ -3,10 +3,7 @@ package com.kalu.controllers;
 import com.kalu.models.db.Measurement;
 import com.kalu.models.db.Station;
 import com.kalu.models.dto.StationDTO;
-import com.kalu.repositories.MeasurementRepository;
-import com.kalu.repositories.MeasurementRepositoryImplInMemory;
-import com.kalu.repositories.StationRepository;
-import com.kalu.repositories.StationRepositoryInMemoryInMemory;
+import com.kalu.repositories.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -22,27 +19,9 @@ import java.util.concurrent.ConcurrentSkipListSet;
 @Path("/stations")
 public class StationController {
 
-    static StationRepository repo = new StationRepositoryInMemoryInMemory();
-    static MeasurementRepository mesRepo = new MeasurementRepositoryImplInMemory();
-    static {
-        String[] names = {"0", "1","2","3"};
-        boolean[] humAndTemp = {true, true, false, false};
-        boolean[] sunshine = {true,false, true, false};
+    static StationRepository repo = new StationRepositoryImpl();
+    static MeasurementRepository mesRepo = new MeasurementRepositoryImpl();
 
-        for (int i=0;i< names.length;++i){
-            Station st = new Station();
-            st.setName(names[i]);
-            st.setHumidity(humAndTemp[i]);
-            st.setSunshine(sunshine[i]);
-            repo.add(st);
-        }
-    }
-
-    public StationController(){
-
-
-
-    }
 
 
     @POST

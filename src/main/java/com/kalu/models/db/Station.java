@@ -1,23 +1,33 @@
 package com.kalu.models.db;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
  * Created by Albert on 13.01.2016.
  */
+@Entity
 public class Station implements  DBObject{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
 
-    private Set<Measurement> measurements = new LinkedHashSet<Measurement>();
+    @OneToMany(mappedBy = "station")
+    private Set<Measurement> measurements = new LinkedHashSet<>();
 
+    @Basic
     private boolean temperature;
 
+    @Basic
     private boolean humidity;
 
+    @Basic
     private boolean sunshine;
 
 
